@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Interativo - Daniel Leandro Ferreira da Silva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .achievement-highlight {
+            background-color: #E0F2FE; /* light-blue-100 */
+            border-left: 4px solid #0EA5E9; /* sky-500 */
+            padding: 8px 12px;
+            margin-top: 8px;
+            border-radius: 4px;
+        }
+        .section-title {
+            border-bottom: 2px solid #3B82F6; /* blue-500 */
+            padding-bottom: 8px;
+            margin-bottom: 24px;
+        }
+        .menu-toggle-icon span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #4B5563; /* gray-600 */
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+        .menu-open .menu-toggle-icon span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        .menu-open .menu-toggle-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-open .menu-toggle-icon span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        .experience-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .experience-item.open .experience-details {
+            max-height: 2000px; 
+            transition: max-height 0.7s ease-in;
+        }
+        .experience-item .arrow-icon {
+            transition: transform 0.3s ease-out;
+        }
+        .experience-item.open .arrow-icon {
+            transform: rotate(90deg);
+        }
+
+        /* Chosen Palette: Azul Sereno */
+        /* Application Structure Plan: A SPA será estruturada como um portfólio de página única, transformando o CV de Daniel Leandro em uma experiência interativa. Uma barra de navegação superior permitirá aos usuários saltar para seções chave: Resumo, Experiência, Formação, Habilidades e Contato. A seção 'Experiência Profissional' será a peça central, utilizando um layout de itens expansíveis onde os usuários podem clicar para revelar detalhes e ver as realizações destacadas. Esta estrutura foi escolhida para fornecer uma maneira mais envolvente e não linear de explorar as qualificações de Daniel Leandro em comparação com um documento estático, permitindo que os recrutadores encontrem rapidamente informações relevantes e compreendam o impacto do seu trabalho. */
+        /* Visualization & Content Choices: Resumo Profissional: Apresentado proeminentemente no topo. Objetivo: Visão geral imediata. Método: Bloco de texto estilizado. Experiência Profissional: Cada cargo detalhado. Objetivo: Mostrar progressão e impacto. Método: Itens expansíveis (HTML/CSS/JS para mostrar/ocultar). As realizações serão visualmente enfatizadas (ex: texto em negrito, fundo destacado). Os resultados quantificáveis (ex: 'redução de 48h para 2h', '+85% eficiência') serão destacados como pontos de dados chave. Nenhuns gráficos complexos do Chart.js estão planeados, pois a força do CV reside nestas realizações textuais, em vez de conjuntos de dados adequados para gráficos típicos. Formação, Cursos, Habilidades: Apresentados em listas claras e estruturadas. Objetivo: Fácil leitura das qualificações. Método: Listas HTML estilizadas. */
+        /* CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. */
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-700">Daniel Leandro Ferreira da Silva</h1>
+            <nav class="hidden md:flex space-x-4">
+                <a href="#resumo" class="text-gray-600 hover:text-blue-600 transition duration-300">Resumo</a>
+                <a href="#experiencia" class="text-gray-600 hover:text-blue-600 transition duration-300">Experiência</a>
+                <a href="#formacao" class="text-gray-600 hover:text-blue-600 transition duration-300">Formação</a>
+                <a href="#habilidades" class="text-gray-600 hover:text-blue-600 transition duration-300">Habilidades</a>
+                <a href="#contato" class="text-gray-600 hover:text-blue-600 transition duration-300">Contato</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-600 focus:outline-none menu-toggle-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-white py-2">
+            <a href="#resumo" class="block px-6 py-2 text-gray-600 hover:bg-blue-50 transition duration-300">Resumo</a>
+            <a href="#experiencia" class="block px-6 py-2 text-gray-600 hover:bg-blue-50 transition duration-300">Experiência</a>
+            <a href="#formacao" class="block px-6 py-2 text-gray-600 hover:bg-blue-50 transition duration-300">Formação</a>
+            <a href="#habilidades" class="block px-6 py-2 text-gray-600 hover:bg-blue-50 transition duration-300">Habilidades</a>
+            <a href="#contato" class="block px-6 py-2 text-gray-600 hover:bg-blue-50 transition duration-300">Contato</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="resumo" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-gray-700 section-title">Resumo Profissional</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="text-lg leading-relaxed">
+                    Profissional Sênior com mais de 15 anos de experiência consolidada em Finanças, Planejamento Estratégico e Controladoria, atuando em empresas de grande porte e diversos setores (Mídia, Telecom, Óleo & Gás, Imobiliário). Especialista em modelagem financeira, otimização de custos e processos, gestão de KPIs, precificação e compliance, com domínio de SAP, Power BI e VBA. Focado em gerar valor para o negócio, alavancar resultados e suportar a tomada de decisões estratégicas.
+                </p>
+                <p class="mt-4 text-md text-gray-600">
+                    Este perfil interativo destaca minhas principais competências e realizações. Navegue pelas seções para conhecer em detalhes minha trajetória e como posso contribuir para sua organização.
+                </p>
+            </div>
+        </section>
+
+        <section id="experiencia" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-gray-700 section-title">Experiência Profissional</h2>
+            <div class="space-y-8" id="experience-container">
+            </div>
+        </section>
+
+        <section id="formacao" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-gray-700 section-title">Formação Acadêmica</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg space-y-6">
+                <div id="education-container">
+                </div>
+            </div>
+        </section>
+
+        <section id="cursos" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-gray-700 section-title">Cursos e Certificações</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg space-y-4">
+                <div id="courses-container">
+                </div>
+            </div>
+        </section>
+
+        <section id="habilidades" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-gray-700 section-title">Habilidades</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">Conhecimentos em Informática</h3>
+                    <ul id="it-skills-container" class="list-disc list-inside space-y-2 text-gray-600">
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">Idiomas</h3>
+                    <p id="languages-container" class="text-gray-600">
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato" class="scroll-mt-20">
+            <h2 class="text-3xl font-bold text-gray-700 section-title">Contato</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                <p class="text-lg mb-2">Daniel Leandro Ferreira da Silva</p>
+                <p class="text-gray-600 mb-1">Telefone: <a href="tel:+5521999247082" class="text-blue-600 hover:underline">(21) 99924-7082</a></p>
+                <p class="text-gray-600 mb-4">Email: <a href="mailto:danieleandrorj@gmail.com" class="text-blue-600 hover:underline">danieleandrorj@gmail.com</a></p>
+                <p class="text-gray-600">Rio de Janeiro, RJ</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-6 mt-16">
+        <p>&copy; <span id="currentYear"></span> Daniel Leandro Ferreira da Silva. CV Interativo.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = document.querySelector('header').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+                const mobileMenu = document.getElementById('mobile-menu');
+                const menuToggle = document.getElementById('menu-toggle');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    menuToggle.classList.remove('menu-open');
+                }
+            });
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuToggle.classList.toggle('menu-open');
+        });
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const cvData = {
+            experience: [
+                {
+                    company: "TIM BRASIL S.A.",
+                    location: "Rio de Janeiro, RJ",
+                    role: "Consultor Sênior – Precificação e Planejamento",
+                    period: "Jan/2023 – Atual",
+                    responsibilities: [
+                        "Avaliação e apuração de resultados econômicos e financeiros de produtos de Internet das Coisas (IoT) para grandes clientes B2B, com análise estratégica de vendas da unidade ‘Corporate’.",
+                        "Desenvolvimento de previsões de vendas (semanais, mensais, anuais), monitoramento de custos e Capex em projetos de IoT.",
+                        "Gestão do orçamento de receitas para revenda de produtos IoT, com simulações e modelagens financeiras para projetos de alto valor."
+                    ],
+                    achievements: [
+                        "Desenvolvi e implementei simulador financeiro estratégico para avaliação de projetos B2B (IoT), resultando em:",
+                        "Notável aceleração do processo de análise de propostas comerciais.",
+                        "Criação de uma visão de fluxo de caixa por projeto, antes inexistente, aprimorando o planejamento financeiro e a visibilidade da alocação de capital.",
+                        "Assegurando maior assertividade nas decisões e um alinhamento superior das propostas ao Business Plan (BP) e às metas de rentabilidade.",
+                        "Viabilizando a aprovação de projetos anteriormente considerados não rentáveis, o que destravou novas e significativas oportunidades de negócio e potencial de receita."
+                    ]
+                },
+                {
+                    company: "INFOTEC BRASIL SA (Prestação de Serviços para Petrobras Petróleo S.A.)",
+                    location: "Rio de Janeiro, RJ",
+                    role: "Analista de Controladoria Sênior",
+                    period: "2022 – 2023",
+                    responsibilities: [
+                        "Análise de demonstrações econômico-financeiras em processos de licitação e contratação, apoiando atividades de compliance, auditoria e combate a fraudes.",
+                        "Suporte à gerência na análise de custos para o setor de Compras e verificação de conformidade com normas e legislação contábil.",
+                        "Diligenciamento do processo de habilitação de fornecedores, mitigando riscos contratuais, técnicos e legais."
+                    ],
+                    achievements: [] // Removido placeholder, pois não haverá dados.
+                },
+                {
+                    company: "RÁDIO E TELEVISÃO BANDEIRANTES DO RIO DE JANEIRO S.A. (BAND RIO)",
+                    location: "Rio de Janeiro, RJ",
+                    role: "Coordenador de Contratos (Planejamento Financeiro)",
+                    period: "Mar/2018 – Nov/2022",
+                    responsibilities: [
+                        "Coordenação do mapeamento e avaliação de performance das empresas do Grupo, criação de KPIs, análise de contratações (despesas e receitas) para apoio à decisão da Diretoria.",
+                        "Elaboração de relatórios gerenciais, acompanhamento de DRE, Balanço, Fluxo de Caixa (Realizado vs. Orçado/Forecast), e orçamento anual.",
+                        "Gestão de contratos, captação de recursos, renegociações e estudos de viabilidade econômica."
+                    ],
+                    achievements: [
+                        "Implementei processos e ferramentas de BI que garantiram 100% de visibilidade sobre as propostas de vendas e a estimativa da receita total, aprimorando a acuracidade do planejamento financeiro.",
+                        "Liderei estratégias de captação de recursos que resultaram em um aumento superior a 85% na eficiência da gestão de caixa.",
+                        "Desenvolvi e automatizei relatórios e processos de controle (incluindo contratos de produção de conteúdo), gerando significativa redução de custos e maior confiabilidade dos dados para auditoria e gestão."
+                    ]
+                },
+                {
+                    company: "TELEVISÃO CIDADE S.A. (SIM TV)",
+                    location: "Rio de Janeiro, RJ",
+                    role: "Especialista Gestão de Contratos (Financeiro)",
+                    period: "Mai/2016 – Fev/2018",
+                    responsibilities: [
+                        "Emissão e análise de relatórios gerenciais (Fluxo de Caixa, Orçamento, Faturamento), desenvolvimento de ferramentas automatizadas (VBA/Macro) para controle financeiro.",
+                        "Gestão de Contas a Receber de grandes clientes, renegociação com fornecedores e acompanhamento de indicadores econômicos."
+                    ],
+                    achievements: [
+                        "Conduzi a renegociação e reestruturação do passivo operacional de médio e longo prazo, alcançando uma redução superior a 50% do endividamento total da empresa.",
+                        "Reestruturei os processos de Contas a Receber, implementando controles que asseguraram total visibilidade dos prazos de pagamento e resultaram na redução de 50% nos erros de cobrança.",
+                        "As iniciativas implementadas de reestruturação financeira e otimização de processos culminaram em um aumento de 25% na margem de lucro da empresa."
+                    ]
+                },
+                {
+                    company: "GEP REALIZAÇÕES IMOBILIÁRIAS LTDA / GLOBAL EQUITY PROPERTIES",
+                    location: "Rio de Janeiro, RJ",
+                    role: "Supervisor de Contas a Receber / Cobrança / Contratos (Incorporação Imobiliária)",
+                    period: "Fev/2013 – Abr/2016",
+                    role_previous: "Analista Controladoria de Operações – Financeiro",
+                    period_previous: "Jan/2010 – Jan/2013",
+                    responsibilities: [
+                        "Gerenciamento financeiro de Fundo de Investimento (Contas a Receber, Contratos, Gestão de Vendas, Repasse Bancário, Registro Imobiliário).",
+                        "Desenvolvimento de políticas para carteira de recebíveis, análise de crédito, negociação com instituições financeiras e cartórios."
+                    ],
+                    achievements: [
+                        "**Como Supervisor:** Liderei a reestruturação e digitalização dos processos de análise de vendas e emissão de contratos, o que resultou na **redução do tempo de ciclo de 48 horas para apenas 2 horas** (ganho de eficiência de ~96%).",
+                        "**Como Supervisor:** Criação da área de contratos e cobrança, resultando em melhor eficiência e satisfação dos clientes, e coordenação de repasse alinhada com bancos e cartórios que gerou ganho financeiro substancial."
+                    ]
+                }
+            ],
+            education: [
+                { degree: "MBA em Finanças e Controladoria", institution: "Universidade Veiga de Almeida (UVA RJ)", period: "Concluído 2023" },
+                { degree: "Ciências Contábeis", institution: "Universidade Veiga de Almeida (UVA RJ)", period: "Em Andamento (Previsão de Conclusão: 2027)" },
+                { degree: "Pós-Graduação em Gestão e Direito Imobiliário", institution: "Universidade Cândido Mendes / CBEPJUR", period: "Concluído 2014" },
+                { degree: "Graduação em Administração", institution: "CEFET – RJ (Centro Federal de Educação Tecnológica Celso Suckow da Fonseca)", period: "Concluído 2005" }
+            ],
+            courses: [
+                "Valuation: Avaliação de Empresas (FIPE)",
+                "Compliance, Combate e Prevenção à Lavagem de Dinheiro (ANBIMA)",
+                "VBA / MACRO - EXCEL Avançado: Desenvolvimento de Relatórios e Algoritmos (ADV INFORMÁTICA)"
+            ],
+            itSkills: [
+                "**Pacote Office:** Excel Avançado (VBA, Macros, Tabelas Dinâmicas, Power Query), Word, PowerPoint.",
+                "**Business Intelligence:** Power BI.",
+                "**Sistemas ERP:** SAP, TOTVS (Microsiga).",
+                "**Outros:** Autocad, SIGIM, ANAPRO, GED Eikon Documents, PLACOMP."
+            ],
+            languages: "Inglês: Nível Intermediário"
+        };
+
+        const experienceContainer = document.getElementById('experience-container');
+        cvData.experience.forEach((exp) => {
+            const item = document.createElement('div');
+            item.classList.add('bg-white', 'p-6', 'rounded-lg', 'shadow-lg', 'experience-item');
+            
+            let previousRoleInfo = '';
+            if (exp.role_previous && exp.period_previous) {
+                previousRoleInfo = `<p class="text-sm text-gray-500 mb-2">${exp.role_previous} (${exp.period_previous})</p>`;
+            }
+
+            let achievementsHTML = '';
+            if (exp.achievements && exp.achievements.length > 0 && !(exp.achievements.length === 1 && exp.achievements[0].trim() === '')) {
+                 achievementsHTML = `
+                    <p class="font-semibold text-gray-700 mb-2 mt-4 border-t pt-4">Principais Realizações:</p>
+                    <div class="space-y-2">
+                        ${exp.achievements.map(a => `<div class="achievement-highlight text-sm">${a}</div>`).join('')}
+                    </div>`;
+            }
+
+
+            item.innerHTML = `
+                <div class="cursor-pointer flex justify-between items-center experience-toggle">
+                    <div>
+                        <h3 class="text-xl font-semibold text-blue-700">${exp.role}</h3>
+                        <p class="text-md font-medium text-gray-700">${exp.company} - ${exp.location}</p>
+                        <p class="text-sm text-gray-500">${exp.period}</p>
+                        ${previousRoleInfo}
+                    </div>
+                    <span class="arrow-icon text-blue-600 text-2xl transform transition-transform duration-300">&#x276F;</span>
+                </div>
+                <div class="experience-details mt-4">
+                    <p class="font-semibold text-gray-700 mb-2">Responsabilidades Principais:</p>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600 mb-4">
+                        ${exp.responsibilities.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                    ${achievementsHTML}
+                </div>
+            `;
+            experienceContainer.appendChild(item);
+        });
+        
+        document.querySelectorAll('.experience-toggle').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const item = toggle.closest('.experience-item');
+                item.classList.toggle('open');
+            });
+        });
+
+        const educationContainer = document.getElementById('education-container');
+        cvData.education.forEach(edu => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <h3 class="text-lg font-semibold text-gray-700">${edu.degree}</h3>
+                <p class="text-md text-gray-600">${edu.institution}</p>
+                <p class="text-sm text-gray-500">${edu.period}</p>
+            `;
+            educationContainer.appendChild(div);
+        });
+
+        const coursesContainer = document.getElementById('courses-container');
+        cvData.courses.forEach(course => {
+            const p = document.createElement('p');
+            p.classList.add('text-gray-600');
+            p.textContent = course;
+            coursesContainer.appendChild(p);
+        });
+
+        const itSkillsContainer = document.getElementById('it-skills-container');
+        cvData.itSkills.forEach(skill => {
+            const li = document.createElement('li');
+            li.innerHTML = skill; 
+            itSkillsContainer.appendChild(li);
+        });
+        
+        document.getElementById('languages-container').textContent = cvData.languages;
+
+    </script>
+</body>
+</html>
